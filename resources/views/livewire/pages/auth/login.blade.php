@@ -13,14 +13,16 @@ form(LoginForm::class);
 
 $login = function () {
     $this->validate();
-
     $this->form->authenticate();
-
     Session::regenerate();
 
-    $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
-};
-
+    $redirectTo = route('dashboard');
+    $user = auth()->user();
+    if ($user->role === 'admin') {
+        $redirectTo = route('filament.admin.auth.login');
+    } 
+    $this->redirectIntended(default: $redirectTo);
+}
 ?>
 
 <div>

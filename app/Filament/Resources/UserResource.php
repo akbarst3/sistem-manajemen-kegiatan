@@ -53,7 +53,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('role'),
+                Tables\Columns\TextColumn::make('role')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -64,11 +65,11 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->label('Status')
-                    ->formatStateUsing(function ($record) {
+                    ->state(function ($record) {
                         return $record->email_verified_at ? 'Verified' : 'Unverified';
                     })
                     ->badge()
-                    ->color(fn($state) => $state === 'Verified' ? 'success' : 'warning'),
+                    ->color(fn($state) => $state === 'Verified' ? 'success' : 'warning')
             ])
 
             ->filters([

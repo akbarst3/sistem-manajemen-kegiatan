@@ -12,14 +12,14 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^3.4",
-        "livewire/volt": "^1.0"
+        "livewire/livewire": "^3.4"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
+        "livewire/volt": "^1.6",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.1",

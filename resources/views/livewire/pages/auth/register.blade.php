@@ -10,6 +10,10 @@ use Illuminate\Validation\Rules;
 use function Livewire\Volt\layout;
 use function Livewire\Volt\rules;
 use function Livewire\Volt\state;
+
+use App\Notifications\NewUserRegistered;
+use Illuminate\Support\Facades\Notification;
+
 layout('layouts.guest');
 
 state([
@@ -35,6 +39,12 @@ $register = function () {
     $validated['email_verified_at'] = null;
 
     event(new Registered($user = User::create($validated)));
+
+    $admins = User::where('role', 'admin')->get();
+
+    foreach ($admins as $admin) {
+        $admin->notify(new NewUserRegistered($user));
+    }
 
     $this->redirectRoute('verification.pending');;
 }

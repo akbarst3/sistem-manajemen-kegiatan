@@ -5,7 +5,7 @@ use App\Livewire\Actions\Logout;
 $logout = function (Logout $logout) {
     $logout();
 
-    $this->redirect('/', navigate: true);
+    $this->redirect('/');
 };
 
 ?>
@@ -22,12 +22,43 @@ $logout = function (Logout $logout) {
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+@php
+    $role = auth()->user()->role;
+@endphp
+
+<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+        {{ __('Dashboard') }}
+    </x-nav-link>
+
+    @if($role === 'himpunan')
+        <x-nav-link :href="route('himpunan.kegiatan.index')" :active="request()->routeIs('himpunan.kegiatan.index')" wire:navigate>
+            {{ __('Kegiatan') }}
+        </x-nav-link>
+    @endif
+
+        @if($role === 'dosen')
+        <x-nav-link :href="route('dosen.kegiatan.review')" 
+                    :active="request()->routeIs('dosen.kegiatan.review')" 
+                    wire:navigate>
+            {{ __('Review Kegiatan') }}
+        </x-nav-link>
+    @endif
+
+    {{-- Role: Mahasiswa --}}
+    @if($role === 'mahasiswa')
+        <x-nav-link :href="route('mahasiswa.kegiatan')" 
+                    :active="request()->routeIs('mahasiswa.kegiatan')" 
+                    wire:navigate>
+            {{ __('Kegiatan') }}
+        </x-nav-link>
+    @endif
+
+
+
+</div>
+
             </div>
 
             <!-- Settings Dropdown -->
